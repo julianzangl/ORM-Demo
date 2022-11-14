@@ -14,10 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuoteController extends AbstractController
 {
     #[Route('/', name: 'app_quote_index', methods: ['GET'])]
-    public function index(QuoteRepository $quoteRepository): Response
+    public function index(Request $request, QuoteRepository $quoteRepository): Response
     {
+        if ($request->query->has('search')) {
+            $quotes = $quoteRepository->findAllByQuery($request->query->get('search'));
+        } else {
+            $quotes = $quoteRepository->findAll();
+        }
+
         return $this->render('quote/index.html.twig', [
-            'quotes' => $quoteRepository->findAll(),
+            'quotes' => $quotes,
         ]);
     }
 
@@ -69,7 +75,7 @@ class QuoteController extends AbstractController
     #[Route('/{id}', name: 'app_quote_delete', methods: ['POST'])]
     public function delete(Request $request, Quote $quote, QuoteRepository $quoteRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$quote->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $quote->getId(), $request->request->get('_token'))) {
             $quoteRepository->remove($quote, true);
         }
 

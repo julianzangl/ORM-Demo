@@ -7,13 +7,13 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Movie Name</th>
-                <th>Release year</th>
-                <th>Quote</th>
-                <th>Character_name</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Movie Name</th>
+            <th>Release year</th>
+            <th>Quote</th>
+            <th>Character_name</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for quote in quotes %}
@@ -37,4 +37,8 @@
     </table>
 
     <a href="{{ path('app_quote_new') }}">Create new</a>
+    <br>
+    <a href="{{ path('app_movie_new', { redirect: 'app_quote_index'}) }}">Create new Movie</a>
+    <br>
+    <a href="{{ path('app_movie_index') }}">Movie list</a>
 {% endblock %}

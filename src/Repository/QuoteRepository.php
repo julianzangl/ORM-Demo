@@ -39,6 +39,22 @@ class QuoteRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByQuery(string $query): array
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.quote LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->orderBy('q.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAll(): array
+    {
+        return $this->findBy([], ['movie.name' => 'ASC']);
+    }
+
 //    /**
 //     * @return Quote[] Returns an array of Quote objects
 //     */

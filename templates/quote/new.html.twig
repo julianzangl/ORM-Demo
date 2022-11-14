@@ -7,5 +7,7 @@
 
     {{ include('quote/_form.html.twig') }}
 
+    <a href="{{ path('app_movie_new', { redirect: 'app_quote_new'}) }}">Create new Movie</a>
+
     <a href="{{ path('app_quote_index') }}">back to list</a>
 {% endblock %}
