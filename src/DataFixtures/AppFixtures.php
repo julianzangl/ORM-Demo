@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
             ['movie' => 'The Godfather: Part II', 'character' => 'Michael Corleone', 'quote' => 'I\'m gonna make him an offer he can\'t refuse.'],
             ['movie' => 'The Dark Knight', 'character' => 'The Joker', 'quote' => 'Why so serious?'],
             ['movie' => 'The Dark Knight', 'character' => 'The Joker', 'quote' => 'You either die a hero, or you live long enough to see yourself become the villain.'],
-            ['movie' => 'The Dark Knight', 'character' => 'The Joker', 'quote' => 'Why so serious?'],
+            ['movie' => 'The Dark Knight', 'character' => 'The Joker', 'quote' => 'Why so not serious?'],
         ];
 
         foreach ($movies as $movie) {
