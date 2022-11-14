@@ -22,7 +22,7 @@
                 <td>{{ quote.movie.releaseDate ? quote.movie.releaseDate|date('Y-m-d') : '' }}</td>
                 <td>{{ quote.quote }}</td>
                 <td>{{ quote.characterName }}</td>
-                <td style="display: flex; flex-direction: row;">
+                <td style="display: flex; flex-direction: row; gap: 5px;">
                     <a href="{{ path('app_quote_show', {'id': quote.id}) }}">show</a>
                     <a href="{{ path('app_quote_edit', {'id': quote.id}) }}">edit</a>
                     {{ include('quote/_delete_form.html.twig') }}
