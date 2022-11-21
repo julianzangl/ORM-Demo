@@ -14,14 +14,26 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/quotes')]
 class QuoteController extends AbstractController
 {
+
     #[Route('/', name: 'app_quote_index', methods: ['GET'])]
     public function index(Request $request, QuoteRepository $quoteRepository): Response
     {
-        if ($request->query->get('search')) {
-            $quotes = $quoteRepository->findAllByQuery($request->query->get('search'));
-        } else {
-            $quotes = $quoteRepository->findAll();
+        $quotes = $quoteRepository->findAll();
+
+        return $this->render('quote/index.html.twig', [
+            'quotes' => $quotes,
+        ]);
+    }
+
+    #[Route('/search', name: 'app_quote_search', methods: ['GET'])]
+    public function search(Request $request, QuoteRepository $quoteRepository): Response
+    {
+
+        $query = $request->query->get('query');
+        if (empty($query)) {
+            return $this->redirectToRoute('app_quote_index');
         }
+        $quotes = $quoteRepository->findAllByQuery($query);
 
         return $this->render('quote/index.html.twig', [
             'quotes' => $quotes,
@@ -44,6 +56,16 @@ class QuoteController extends AbstractController
         return $this->renderForm('quote/new.html.twig', [
             'quote' => $quote,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/random', name: 'app_quote_random', methods: ['GET'])]
+    public function random(Request $request, QuoteRepository $quoteRepository): Response
+    {
+        $quote = $quoteRepository->getRandomQuote();
+
+        return $this->render('quote/index.html.twig', [
+            'quotes' => [$quote],
         ]);
     }
 

@@ -41,6 +41,9 @@ class QuoteRepository extends ServiceEntityRepository
 
     public function findAllByQuery(string $query): array
     {
+        if (empty($query)) {
+            return $this->findAll();
+        }
         return $this->createQueryBuilder('q')
             ->andWhere('q.quote LIKE :query')
             ->setParameter('query', '%' . $query . '%')
@@ -48,6 +51,16 @@ class QuoteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function getRandomQuote(): ?Quote
+    {
+        $quotes = $this->findAll();
+        if (empty($quotes)) {
+            return null;
+        }
+        $randomIndex = array_rand($quotes);
+        return $quotes[$randomIndex];
     }
 
 //    /**

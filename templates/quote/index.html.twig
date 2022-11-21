@@ -5,10 +5,11 @@
 {% block body %}
     <h1>Quote index</h1>
     {# create a searchbar #}
-    <form action="{{ path('app_quote_index') }}" method="get">
-        <input type="text" name="search" placeholder="Search">
+    <form action="{{ path('app_quote_search') }}" method="get">
+        <input type="text" name="query" placeholder="Search">
         <button type="submit">Search</button>
     </form>
+    <a href="{{ path('app_quote_random') }}">Random quote</a>
     <table class="table">
         <thead>
         <tr>
