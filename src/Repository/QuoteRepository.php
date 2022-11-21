@@ -50,11 +50,6 @@ class QuoteRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findAll(): array
-    {
-        return $this->findBy([], ['movie.name' => 'ASC']);
-    }
-
 //    /**
 //     * @return Quote[] Returns an array of Quote objects
 //     */

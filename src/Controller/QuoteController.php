@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Quote;
 use App\Form\QuoteType;
 use App\Repository\QuoteRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ class QuoteController extends AbstractController
     #[Route('/', name: 'app_quote_index', methods: ['GET'])]
     public function index(Request $request, QuoteRepository $quoteRepository): Response
     {
-        if ($request->query->has('search')) {
+        if ($request->query->get('search')) {
             $quotes = $quoteRepository->findAllByQuery($request->query->get('search'));
         } else {
             $quotes = $quoteRepository->findAll();
