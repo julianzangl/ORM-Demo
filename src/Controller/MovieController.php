@@ -25,6 +25,7 @@ class MovieController extends AbstractController
     #[Route('/new', name: 'app_movie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, MovieRepository $movieRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $movie = new Movie();
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
@@ -55,6 +56,7 @@ class MovieController extends AbstractController
     #[Route('/{id}/edit', name: 'app_movie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Movie $movie, MovieRepository $movieRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
 
@@ -73,6 +75,7 @@ class MovieController extends AbstractController
     #[Route('/{id}', name: 'app_movie_delete', methods: ['POST'])]
     public function delete(Request $request, Movie $movie, MovieRepository $movieRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete' . $movie->getId(), $request->request->get('_token'))) {
             $movieRepository->remove($movie, true);
         }
