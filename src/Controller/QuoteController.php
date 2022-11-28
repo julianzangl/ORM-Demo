@@ -43,6 +43,8 @@ class QuoteController extends AbstractController
     #[Route('/new', name: 'app_quote_new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuoteRepository $quoteRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $quote = new Quote();
         $form = $this->createForm(QuoteType::class, $quote);
         $form->handleRequest($request);
