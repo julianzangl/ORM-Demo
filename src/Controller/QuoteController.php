@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Quote;
 use App\Form\QuoteType;
 use App\Repository\QuoteRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,6 +81,7 @@ class QuoteController extends AbstractController
     #[Route('/{id}/edit', name: 'app_quote_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Quote $quote, QuoteRepository $quoteRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(QuoteType::class, $quote);
         $form->handleRequest($request);
 
@@ -100,6 +100,7 @@ class QuoteController extends AbstractController
     #[Route('/{id}', name: 'app_quote_delete', methods: ['POST'])]
     public function delete(Request $request, Quote $quote, QuoteRepository $quoteRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete' . $quote->getId(), $request->request->get('_token'))) {
             $quoteRepository->remove($quote, true);
         }

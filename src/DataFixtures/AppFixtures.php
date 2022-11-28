@@ -5,11 +5,20 @@ namespace App\DataFixtures;
 use App\Entity\Hamster;
 use App\Entity\Movie;
 use App\Entity\Quote;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
         // generate an array of movie entities with name and release date
@@ -51,6 +60,13 @@ class AppFixtures extends Fixture
             $quoteEntity->setMovie($manager->getRepository(Movie::class)->findOneBy(['name' => $quote['movie']]));
             $manager->persist($quoteEntity);
         }
+
+        //create default admin
+        $admin = new User();
+        $admin->setUsername('admin');
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'admin123!'));
+        $admin->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
         $manager->flush();
     }
 }
