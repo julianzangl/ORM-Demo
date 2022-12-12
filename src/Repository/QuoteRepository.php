@@ -44,13 +44,12 @@ class QuoteRepository extends ServiceEntityRepository
         if (empty($query)) {
             return $this->findAll();
         }
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.quote LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
-            ->orderBy('q.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
+        $potentialResults = $this->findAll();
+        // get all quotes that have a levenshtein distance of 1 or 2 from the query
+        return array_filter($potentialResults, function (Quote $quote) use ($query) {
+            $distance = levenshtein(strtolower($query), strtolower($quote->getQuote()), 0, 3, 3);
+            return $distance <= 2;
+        });
     }
 
     public function getRandomQuote(): ?Quote
