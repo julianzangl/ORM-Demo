@@ -29,8 +29,10 @@
                 <td>{{ quote.characterName }}</td>
                 <td style="display: flex; flex-direction: row; gap: 5px;">
                     <a href="{{ path('app_quote_show', {'id': quote.id}) }}">show</a>
-                    <a href="{{ path('app_quote_edit', {'id': quote.id}) }}">edit</a>
-                    {{ include('quote/_delete_form.html.twig') }}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_quote_edit', {'id': quote.id}) }}">edit</a>
+                        {{ include('quote/_delete_form.html.twig') }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -41,9 +43,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_quote_new') }}">Create new</a>
-    <br>
-    <a href="{{ path('app_movie_new', { redirect: 'app_quote_index'}) }}">Create new Movie</a>
-    <br>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_quote_new') }}">Create new</a>
+        <br>
+        <a href="{{ path('app_movie_new', { redirect: 'app_quote_index'}) }}">Create new Movie</a>
+        <br>
+    {% endif %}
     <a href="{{ path('app_movie_index') }}">Movie list</a>
 {% endblock %}
