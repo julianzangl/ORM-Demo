@@ -15,7 +15,9 @@ class QuoteType extends AbstractType
         $builder
             ->add('quote')
             ->add('character_name')
-            ->add('movie');
+            ->add('movie')
+            ->add('times_said')
+            ->add('magic_string');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
