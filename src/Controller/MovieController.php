@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/movies')]
 class MovieController extends AbstractController
@@ -54,7 +55,7 @@ class MovieController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_movie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Movie $movie, MovieRepository $movieRepository): Response
+    public function edit(Request $request, Movie $movie, MovieRepository $movieRepository, ValidatorInterface $validator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(MovieType::class, $movie);

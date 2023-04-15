@@ -17,13 +17,22 @@ class Movie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4, max: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank]
+    #[Assert\Type(\DateTimeInterface::class)]
     private ?\DateTimeInterface $release_date = null;
 
     #[ORM\OneToMany(mappedBy: 'movie', targetEntity: Quote::class)]
     private Collection $quotes;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Type('float')]
+    private ?float $Rating = null;
 
     public function __construct()
     {
@@ -92,5 +101,17 @@ class Movie
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getRating(): ?float
+    {
+        return $this->Rating;
+    }
+
+    public function setRating(?float $Rating): self
+    {
+        $this->Rating = $Rating;
+
+        return $this;
     }
 }

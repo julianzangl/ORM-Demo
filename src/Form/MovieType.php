@@ -14,6 +14,7 @@ class MovieType extends AbstractType
         $builder
             ->add('name')
             ->add('release_date')
+            ->add('rating')
         ;
     }
 

@@ -11,6 +11,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Release_date</th>
+            <th>Rating</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <td>{{ movie.id }}</td>
                 <td>{{ movie.name }}</td>
                 <td>{{ movie.releaseDate ? movie.releaseDate|date('Y-m-d') : '' }}</td>
+                <td> {{ movie.rating }} </td>
                 <td style="display: flex; flex-direction: row; gap: 5px;">
                     <a href="{{ path('app_movie_show', {'id': movie.id}) }}">show</a>
                     {% if is_granted('ROLE_ADMIN') %}

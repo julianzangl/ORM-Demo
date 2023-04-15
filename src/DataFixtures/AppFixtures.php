@@ -23,10 +23,10 @@ class AppFixtures extends Fixture
     {
         // generate an array of movie entities with name and release date
         $movies = [
-            ['name' => 'The Shawshank Redemption', 'releaseDate' => new \DateTime('1994-09-23')],
-            ['name' => 'The Godfather', 'releaseDate' => new \DateTime('1972-03-24')],
-            ['name' => 'The Godfather: Part II', 'releaseDate' => new \DateTime('1974-12-20')],
-            ['name' => 'The Dark Knight', 'releaseDate' => new \DateTime('2008-07-18')],
+            ['name' => 'The Shawshank Redemption', 'releaseDate' => new \DateTime('1994-09-23'), 'rating' => 6.3],
+            ['name' => 'The Godfather', 'releaseDate' => new \DateTime('1972-03-24'), 'rating' => 9.2],
+            ['name' => 'The Godfather: Part II', 'releaseDate' => new \DateTime('1974-12-20'), 'rating' => 9.0],
+            ['name' => 'The Dark Knight', 'releaseDate' => new \DateTime('2008-07-18'), 'rating' => 9.4],
         ];
 
         // create a list of quotes for above movies with character
@@ -49,6 +49,7 @@ class AppFixtures extends Fixture
             $movieEntity = new Movie();
             $movieEntity->setName($movie['name']);
             $movieEntity->setReleaseDate($movie['releaseDate']);
+            $movieEntity->setRating($movie['rating']);
             $manager->persist($movieEntity);
         }
         $manager->flush();
